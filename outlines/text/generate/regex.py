@@ -135,7 +135,9 @@ class Regex(Continuation):
         masks = []
         mask_shape = (logits.shape[-1],)
         for pstate in self.pstates:
-            mask = torch.full(mask_shape, -math.inf, device=self.device)
+            mask = torch.full(
+                (len(logits[0]),), -math.inf, device=self.device
+            )
 
             if pstate[1] > -1:
                 next_support = self.pstate_to_vocab[pstate[:2]]
